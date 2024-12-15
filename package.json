@@ -21,9 +21,11 @@
     "test:all": "yarn test && yarn test:int && yarn lint:langgraph"
   },
   "dependencies": {
+    "@langchain/anthropic": "^0.3.9",
     "@langchain/core": "^0.3.2",
     "@langchain/langgraph": "^0.2.5",
     "@langchain/openai": "^0.3.14",
+    "@langchain/xai": "^0.0.1",
     "@solana/web3.js": "^1.95.8",
     "solana-agent-kit": "^1.1.0"
   },
