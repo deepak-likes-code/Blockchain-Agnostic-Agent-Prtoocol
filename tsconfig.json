@@ -8,14 +8,9 @@
     "esModuleInterop": true,
     "noImplicitReturns": true,
     "declaration": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "useDefineForClassFields": true,
-    "strictPropertyInitialization": false,
+
     "allowJs": true,
-    "strict": true,
-    "strictFunctionTypes": false,
     "outDir": "dist",
     "types": ["jest", "node"],
     "resolveJsonModule": true

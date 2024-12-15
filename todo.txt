@@ -1,0 +1,7 @@
+SETUP THE ARCHITECTURE
+- figure out all the agents and the architecture
+    - defi tools
+    - retrieve all the docs
+    - search through all trending coins on birdseye
+    - get information about the top traders etc
+    - 
