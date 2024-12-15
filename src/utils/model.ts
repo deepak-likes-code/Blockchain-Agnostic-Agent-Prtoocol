@@ -1,6 +1,7 @@
 import { ChatOpenAI } from "@langchain/openai"
 import { ChatAnthropic } from "@langchain/anthropic"
 import { ChatXAI } from "@langchain/xai"
+import OpenAI from "openai";
 import "dotenv/config"
 
 
@@ -27,3 +28,12 @@ export const xAIModel= new ChatXAI({
     model:"grok-beta",
     apiKey:process.env.XAI_API_KEY
 })
+
+
+export const dalleModel= new OpenAI({
+    apiKey:process.env.OPENAI_API_KEY
+})
+
+// const url= await dalleModel.then(res=>res.data[0].url)
+
+// console.log(url)

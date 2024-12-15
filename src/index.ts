@@ -4,7 +4,7 @@ import { defiNode } from "./agent/defiManager.js";
 import { defiToolsNode } from "./agent/defi.js";
 import { START, END } from "@langchain/langgraph";
 import { toolRouter } from "./router/defi.js";
-import { swapMessage, generalMessage } from "./examples/index.js";
+import { swapMessage, generalMessage, pumpFun } from "./examples/index.js";
 import { chiefRouter } from "./router/index.js";
 import { cheifNode } from "./agent/cheif.js";
 import { generalistNode } from "./agent/generalist.js";
@@ -22,6 +22,6 @@ const workflow = new StateGraph(solanaAgentState)
 
 export const graph = workflow.compile();
 
-const result = await graph.invoke(generalMessage);
+const result = await graph.invoke(pumpFun);
 
 console.log(result);
