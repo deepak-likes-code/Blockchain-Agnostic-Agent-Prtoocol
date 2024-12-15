@@ -2,13 +2,11 @@ import "dotenv/config";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { solanaAgentState } from "../utils/state.js";
 import { prompt, parser } from "../prompts/chief.js";
-import { defiTools } from "./defi.js";
-import { gptMiniModel, gptModel } from "../utils/model.js";
-import { HumanMessage } from "@langchain/core/messages";
+import { gptModel } from "../utils/model.js";
 
 const chain = RunnableSequence.from([prompt, gptModel, parser]);
 
-export const callNode = async (state: typeof solanaAgentState.State) => {
+export const cheifNode = async (state: typeof solanaAgentState.State) => {
   const { messages } = state;
 
   const result = await chain.invoke({
@@ -16,10 +14,9 @@ export const callNode = async (state: typeof solanaAgentState.State) => {
     messages: messages,
   });
 
-  const { isTechnicalQuery, isDefiQuery, isCurrentAffair, isGeneralQuestion } =
-    result;
+  const { isTechnicalQuery, isDefiQuery, isGeneralQuestion } = result;
 
-  return { isGeneralQuestion, isCurrentAffair, isDefiQuery, isTechnicalQuery };
+  return { isGeneralQuestion, isDefiQuery, isTechnicalQuery };
 };
 
 // const example = "how do i add a transaction in a solana smart contract?";

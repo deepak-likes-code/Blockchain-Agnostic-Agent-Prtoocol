@@ -1,7 +1,3 @@
-import {
-  ChatPromptTemplate,
-  MessagesPlaceholder,
-} from "@langchain/core/prompts";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";
 import { z } from "zod";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -14,9 +10,9 @@ export const parser = StructuredOutputParser.fromZodSchema(
     isDefiQuery: z
       .boolean()
       .describe("Query is related to DeFi or financial protocols"),
-    isCurrentAffair: z
-      .boolean()
-      .describe("Query is about recent blockchain events"),
+    // isCurrentAffair: z
+    //   .boolean()
+    //   .describe("Query is about recent blockchain events"),
     isGeneralQuestion: z.boolean().describe("Query is about basic concepts"),
   }),
 );
@@ -31,8 +27,8 @@ export const prompt = PromptTemplate.fromTemplate(
  {formatInstructions}
 
     Teams and their specialties:
-    - TECHNICAL: Handles technical implementation, coding, and infrastructure questions
-    - DEFI: Manages DeFi, trading, and financial protocol related queries
+    - TECHNICAL: Handles technical implementation, coding, and infrastructure questions regarding Solana
+    - DEFI: Manages DeFi, trading, and financial protocol actions like swapping , trading, creating NFTs etc
     - CURRENT_AFFAIRS: Addresses recent blockchain events, news, and updates
     - GENERAL: Handles basic blockchain concepts and general information
 

@@ -33,10 +33,10 @@ export const solanaAgentState = Annotation.Root({
     default: () => false,
   }),
 
-  isCurrentAffair: Annotation<boolean>({
-    reducer: (x, y) => y ?? x ?? false,
-    default: () => false,
-  }),
+  // isCurrentAffair: Annotation<boolean>({
+  //   reducer: (x, y) => y ?? x ?? false,
+  //   default: () => false,
+  // }),
 
   isGeneralQuestion: Annotation<boolean>({
     reducer: (x, y) => y ?? x ?? false,

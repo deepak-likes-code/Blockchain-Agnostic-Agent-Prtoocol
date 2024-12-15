@@ -10,7 +10,7 @@ const modelBoundTool = gptModel.bindTools(defiTools);
 
 const chain = RunnableSequence.from([prompt, modelBoundTool]);
 
-export const callNode = async (state: typeof solanaAgentState.State) => {
+export const defiNode = async (state: typeof solanaAgentState.State) => {
   const { messages } = state;
   const tokenListStringified = JSON.stringify(tokenList);
 

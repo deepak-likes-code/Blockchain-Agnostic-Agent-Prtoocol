@@ -4,4 +4,4 @@ import { swap_token } from "../tools/defi/swap.js";
 
 export const defiTools = [solana_transfer, swap_token];
 
-export const defiNode = new ToolNode(defiTools);
+export const defiToolsNode = new ToolNode(defiTools);

@@ -11,3 +11,7 @@ export const transferMessage = {
     ),
   ],
 };
+
+export const generalMessage = {
+  messages: [new HumanMessage("who is the richest person in mexico? ")],
+};
