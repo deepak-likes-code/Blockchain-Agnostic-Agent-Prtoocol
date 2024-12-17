@@ -1,14 +1,10 @@
 import "dotenv/config";
-import { RunnableSequence } from "@langchain/core/runnables";
 import { tokenList } from "../../helpers/tokens.js";
 import { gptModel } from "../../utils/model.js";
 import { solanaAgentState } from "../../utils/state.js";
 import { transferSwapPrompt } from "../../prompts/defi/transferSwap.js";
 import { transferSwapTools } from "./tools/defi.js";
-
-const modelBoundTool = gptModel.bindTools(transferSwapTools);
-
-const chain = RunnableSequence.from([transferSwapPrompt, modelBoundTool]);
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
 export const transferSwapNode = async (
   state: typeof solanaAgentState.State,
@@ -16,12 +12,16 @@ export const transferSwapNode = async (
   const { messages } = state;
   const tokenListStringified = JSON.stringify(tokenList);
 
-  const result = await chain.invoke({
+  const result = await transferSwapGraph.invoke({
     messages: messages,
     token_list: tokenListStringified,
   });
 
-  return {
-    messages: [result],
-  };
+  return { messages: [...result.messages] };
 };
+
+const transferSwapGraph = createReactAgent({
+  llm: gptModel,
+  tools: transferSwapTools,
+  stateModifier: transferSwapPrompt,
+});

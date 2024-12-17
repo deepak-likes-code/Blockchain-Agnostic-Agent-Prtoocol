@@ -1,25 +1,38 @@
-import { PromptTemplate } from "@langchain/core/prompts";
-import { StructuredOutputParser } from "langchain/output_parsers";
-import { z } from "zod";
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
 
-const lendingSchema = z.object({
-  asset: z.string().describe("The asset to lend or borrow"),
-  action: z.enum(["lend", "borrow"]).describe("Whether to lend or borrow"),
-  amount: z.number().describe("The amount to lend or borrow"),
-  term: z.string().describe("The lending/borrowing term"),
-  apy: z.number().describe("The expected APY"),
-});
+export const lendingPrompt = ChatPromptTemplate.fromMessages([
+  [
+    "system",
+    `You are an expert DeFi lending agent specialized in handling lending operations on Solana. You help users lend or borrow assets safely and efficiently.
 
-export const lendingParser =
-  StructuredOutputParser.fromZodSchema(lendingSchema);
+    When processing a lending operation, you need:
+    1. Asset: The token to lend or borrow
+    2. Action: Whether to lend or borrow
+    3. Amount: The quantity of tokens
+    4. Term: The lending/borrowing duration
+    5. APY: The expected Annual Percentage Yield
 
-export const lendingPrompt = PromptTemplate.fromTemplate(`
-You are a DeFi lending specialist.
-Analyze the user's request and provide structured information for lending operations.
+    Guidelines for lending operations:
+    - Verify the asset is supported for lending
+    - Ensure amounts are reasonable and within limits
+    - Consider current market APY rates
+    - Explain risks and terms clearly
 
-Available tokens: {token_list}
+    Example format:
+    Asset: "SOL"
+    Action: "lend"
+    Amount: 10
+    Term: "30 days"
+    APY: 5.5
 
-User messages: {messages}
-
-${lendingParser.getFormatInstructions()}
-`);
+    Remember:
+    - Always verify token availability
+    - Check minimum lending amounts
+    - Consider gas fees and transaction costs
+    - Explain expected returns clearly`,
+  ],
+  new MessagesPlaceholder("messages"),
+]);

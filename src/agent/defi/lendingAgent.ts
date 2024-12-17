@@ -3,37 +3,24 @@ import { RunnableSequence } from "@langchain/core/runnables";
 import { tokenList } from "../../helpers/tokens.js";
 import { gptModel } from "../../utils/model.js";
 import { solanaAgentState } from "../../utils/state.js";
-import { lendingPrompt, lendingParser } from "../../prompts/defi/lending.js";
-import { lendingTools } from "./tools/defi.js";
+import { lendingPrompt } from "../../prompts/defi/lending.js";
+import { lendingTools } from "../../tools/defi/lendTokens.js";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
-const modelBoundTool = gptModel.bindTools(lendingTools);
-
-const chain = RunnableSequence.from([
-  {
-    messages: (input) => input.messages,
-    formatInstructions: () => lendingParser.getFormatInstructions(),
-  },
-  lendingPrompt,
-  gptModel,
-  lendingParser,
-]);
+const lendingGraph = createReactAgent({
+  llm: gptModel,
+  tools: lendingTools,
+  stateModifier: lendingPrompt,
+});
 
 export const lendingNode = async (state: typeof solanaAgentState.State) => {
   const { messages } = state;
   const tokenListStringified = JSON.stringify(tokenList);
 
-  const result = await chain.invoke({
+  const result = await lendingGraph.invoke({
     messages: messages,
     token_list: tokenListStringified,
   });
 
-  return {
-    lendingDetails: {
-      asset: result.asset,
-      action: result.action,
-      amount: result.amount,
-      term: result.term,
-      apy: result.apy,
-    },
-  };
+  return { messages: [...result.messages] };
 };

@@ -5,6 +5,12 @@ import { solanaAgentState } from "../utils/state.js";
 export const defiTeamRouter = (state: typeof solanaAgentState.State) => {
   if (state.defiOptions.isSwap) {
     return "transferSwap";
+  }
+  if (state.defiOptions.isPumpFun) {
+    return "pumpFun";
+  }
+  if (state.defiOptions.isStaking) {
+    return "lending";
   } else {
     return END;
   }
@@ -18,14 +24,4 @@ export const defiTeamRouter = (state: typeof solanaAgentState.State) => {
   // } else if (state.defiOptions.isNFTLaunch) {
   //   return "nft";
   // }
-};
-
-export const transferSwapRouter = (state: typeof solanaAgentState.State) => {
-  const lastMessage = state.messages[state.messages.length - 1] as AIMessage;
-
-  if (lastMessage?.tool_calls?.length || 0 > 0) {
-    return "transferSwapTools";
-  } else {
-    return "transferSwap";
-  }
 };

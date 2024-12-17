@@ -2,6 +2,15 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
+import { tokenList } from "../../helpers/tokens.js";
+
+// Convert token list to a more readable format for the prompt
+const formattedTokenList = tokenList
+  .map(
+    (token) =>
+      `- ${token.name} (${token.ticker}) - Decimals: ${token.decimal} - Address: ${token.mintAddress}`,
+  )
+  .join("\n    ");
 
 export const transferSwapPrompt = ChatPromptTemplate.fromMessages([
   [
@@ -22,11 +31,11 @@ export const transferSwapPrompt = ChatPromptTemplate.fromMessages([
     - Input and output tokens must be different
     - Select tokens from this list of supported tokens:
 
-    {token_list}
+    ${formattedTokenList}
 
     Example amounts:
-    - If user says "0.01 SOL", use exactly 0.01 (not 0.010 or 0.0100)
-    - If user says "1.234 USDC", use exactly 1.234 (not 1.23 or 1.2340)`,
+    If you say "0.01 SOL", I will use exactly 0.01 (not 0.010 or 0.0100)
+    If you say "1.234 USDC", I will use exactly 1.234 (not 1.23 or 1.2340)`,
   ],
   new MessagesPlaceholder("messages"),
 ]);
