@@ -6,7 +6,7 @@ export const chiefRouter = async (state: typeof solanaAgentState.State) => {
   const { isDefiQuery, isGeneralQuestion, isTechnicalQuery } = state;
 
   if (isDefiQuery) {
-    return "defiTeam";
+    return "defiManager";
   } else if (isGeneralQuestion) {
     return "generalist";
   } else {
