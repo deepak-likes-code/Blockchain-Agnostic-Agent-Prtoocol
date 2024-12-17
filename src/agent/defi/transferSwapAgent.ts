@@ -3,7 +3,7 @@ import { tokenList } from "../../helpers/tokens.js";
 import { gptModel } from "../../utils/model.js";
 import { solanaAgentState } from "../../utils/state.js";
 import { transferSwapPrompt } from "../../prompts/defi/transferSwap.js";
-import { transferSwapTools } from "./tools/defi.js";
+import { transferSwapTools } from "./defiToolNode.js";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
 export const transferSwapNode = async (

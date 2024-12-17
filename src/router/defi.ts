@@ -14,14 +14,4 @@ export const defiTeamRouter = (state: typeof solanaAgentState.State) => {
   } else {
     return END;
   }
-
-  // } else if (state.defiOptions.isTransfer) {
-  //   return "transferSwap";
-  // } else if (state.defiOptions.isStaking) {
-  //   return "lending";
-  // } else if (state.defiOptions.isTokenLaunch) {
-  //   return "pumpfun";
-  // } else if (state.defiOptions.isNFTLaunch) {
-  //   return "nft";
-  // }
 };

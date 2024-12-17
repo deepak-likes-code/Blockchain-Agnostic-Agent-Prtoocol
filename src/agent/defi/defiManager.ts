@@ -4,9 +4,6 @@ import { tokenList } from "../../helpers/tokens.js";
 import { gptMiniModel, gptModel } from "../../utils/model.js";
 import { solanaAgentState } from "../../utils/state.js";
 import { defiPrompt, defiParser } from "../../prompts/defi/defiManager.js";
-import { defiTools } from "./tools/defi.js";
-
-const modelBoundTool = gptModel.bindTools(defiTools);
 
 const chain = RunnableSequence.from([
   {

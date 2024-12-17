@@ -1,8 +1,4 @@
-import {
-  ChatPromptTemplate,
-  MessagesPlaceholder,
-  PromptTemplate,
-} from "@langchain/core/prompts";
+import { PromptTemplate } from "@langchain/core/prompts";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";
 import { z } from "zod";
 
@@ -14,7 +10,11 @@ export const defiParser = StructuredOutputParser.fromZodSchema(
     isTransfer: z
       .boolean()
       .describe("Query is about transferring tokens or assets"),
-    isStaking: z.boolean().describe("Query involves staking or yield farming"),
+    isStaking: z
+      .boolean()
+      .describe(
+        "Query involves staking, lending, or yield farming (including Lulo platform operations)",
+      ),
     isTokenLaunch: z
       .boolean()
       .describe("Query is about launching new tokens or cryptocurrencies"),
@@ -66,6 +66,11 @@ export const defiPrompt = PromptTemplate.fromTemplate(
       * Staking reward calculations
       * Unstaking procedures
       * Lock-up periods
+      * Lulo lending operations
+      * Lulo staking activities
+      * Lending market participation
+      * Borrowing and lending rates
+      * Collateral management
 
     - Token Launch queries include:
       * Token creation and deployment
