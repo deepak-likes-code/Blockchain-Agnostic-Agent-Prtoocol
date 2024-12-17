@@ -15,3 +15,11 @@ export const transferMessage = {
 export const generalMessage = {
   messages: [new HumanMessage("who is the richest person in mexico? ")],
 };
+
+export const pumpFun = {
+  messages: [
+    new HumanMessage(
+      "mint a meme coin on pump fun called catsAreGods with the ticker $CATGOD and the image of cat with an aura ",
+    ),
+  ],
+};

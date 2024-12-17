@@ -10,9 +10,6 @@ export const parser = StructuredOutputParser.fromZodSchema(
     isDefiQuery: z
       .boolean()
       .describe("Query is related to DeFi or financial protocols"),
-    // isCurrentAffair: z
-    //   .boolean()
-    //   .describe("Query is about recent blockchain events"),
     isGeneralQuestion: z.boolean().describe("Query is about basic concepts"),
   }),
 );
@@ -28,8 +25,7 @@ export const prompt = PromptTemplate.fromTemplate(
 
     Teams and their specialties:
     - TECHNICAL: Handles technical implementation, coding, and infrastructure questions regarding Solana
-    - DEFI: Manages DeFi, trading, and financial protocol actions like swapping , trading, creating NFTs etc
-    - CURRENT_AFFAIRS: Addresses recent blockchain events, news, and updates
+    - DEFI: Manages DeFi, trading,lending, staking and financial protocol actions like swapping , trading, creating NFTs , creating shitcoins, memecoins on Pump.Fun, staking/lending on Jupiter, lending/staking on Lulo etc
     - GENERAL: Handles basic blockchain concepts and general information
 
     Classification Guidelines:
