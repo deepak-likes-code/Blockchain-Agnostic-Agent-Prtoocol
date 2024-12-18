@@ -1,0 +1,22 @@
+{
+  "ignoreFolders": [
+    "/build",
+    "/temp",
+    "/logs",
+    "node_modules",
+    "/dist",
+    "/coverage",
+    "/.git",
+    "/.idea",
+    "/.vscode",
+    "/vendor",
+    "/bin",
+    "/obj",
+    "/out",
+    "/target",
+    "/cache",
+    "/tmp",
+    "package-lock.json",
+    "yarn.lock"
+  ]
+}
