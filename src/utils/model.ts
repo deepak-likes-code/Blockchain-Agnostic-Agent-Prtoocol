@@ -28,12 +28,12 @@ export const dalleModel = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const url = await dalleModel.images
-  .generate({
-    prompt: "a cat as a image for a meme coin",
-    n: 1,
-    size: "1024x1024",
-  })
-  .then((res) => res.data[0].url);
+// const url = await dalleModel.images
+//   .generate({
+//     prompt: "a cat as a image for a meme coin",
+//     n: 1,
+//     size: "1024x1024",
+//   })
+//   .then((res) => res.data[0].url);
 
-console.log(url);
+// console.log(url);

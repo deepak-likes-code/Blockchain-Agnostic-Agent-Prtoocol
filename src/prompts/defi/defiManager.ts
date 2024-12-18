@@ -24,6 +24,9 @@ export const defiParser = StructuredOutputParser.fromZodSchema(
     isPumpFun: z
       .boolean()
       .describe("Query is specifically about Pump.Fun platform operations"),
+    isBridge: z
+      .boolean()
+      .describe("Query is about bridging assets between chains"),
   }),
 );
 
@@ -44,6 +47,7 @@ export const defiPrompt = PromptTemplate.fromTemplate(
     - TOKEN_LAUNCH: Creating new tokens, memecoins, or cryptocurrencies
     - NFT_LAUNCH: Creating or launching NFT collections
     - PUMP_FUN: Operations specific to Pump.Fun platform
+    - BRIDGE: Moving tokens between different blockchain networks
 
     Detailed Classification Guidelines (Select Most Relevant ONE):
     - Swap queries include: 
@@ -92,6 +96,13 @@ export const defiPrompt = PromptTemplate.fromTemplate(
       * Pump.Fun token launches
       * Platform fees and requirements
       * Pump.Fun ecosystem interactions
+
+    - Bridge queries include:
+      * Cross-chain transfers
+      * Moving assets between Solana and other chains
+      * Wormhole bridge operations
+      * References to sending tokens to other networks
+      * Mentions of cross-chain or inter-blockchain transfers
 
     IMPORTANT: Choose ONLY ONE category. Set that category to true and all others to false.
     If a query could fit multiple categories, choose the most specific and relevant one.

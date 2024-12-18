@@ -28,10 +28,10 @@ const workflow = new StateGraph(solanaAgentState)
 
 export const graph = workflow.compile();
 
-export const transferMessage = {
-  // messages: [new HumanMessage("launch a meme coi based on cats on pump.fun")],
-};
+// export const transferMessage = {
+//   messages: [new HumanMessage("launch a meme coi based on cats on pump.fun")],
+// };
 
-const result = await graph.invoke(transferMessage);
+// const result = await graph.invoke(transferMessage);
 
-console.log(result);
+// console.log(result);
