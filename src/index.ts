@@ -29,7 +29,7 @@ const workflow = new StateGraph(solanaAgentState)
 export const graph = workflow.compile();
 
 export const transferMessage = {
-  messages: [new HumanMessage("lend 1 USDc on Lulo  ")],
+  // messages: [new HumanMessage("launch a meme coi based on cats on pump.fun")],
 };
 
 const result = await graph.invoke(transferMessage);

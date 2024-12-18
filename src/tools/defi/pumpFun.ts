@@ -5,49 +5,38 @@ import { launchPumpFunToken } from "solana-agent-kit/dist/tools/launch_pumpfun_t
 import { dalleModel } from "../../utils/model.js";
 
 export const mint_shit_coin = tool(
-  async ({tokenName, tokenTicker, description, imagePrompt}) => {
+  async ({ tokenName, tokenTicker, description, imagePrompt }) => {
+    try {
+      const image = await dalleModel.images.generate({
+        prompt: imagePrompt,
+        n: 1,
+        size: "1024x1024",
+      });
 
-try{
+      const imageUrl = image.data[0].url;
 
-  const image= await dalleModel.images.generate({
-    prompt:imagePrompt,
-    n:1,
-    size:"512x512",
-  })
+      console.log(imageUrl);
 
-  const imageUrl=image.data[0].url
+      const result = await launchPumpFunToken(
+        agent,
+        tokenName,
+        tokenTicker,
+        description,
+        imageUrl!,
+      );
 
-  console.log(imageUrl)
-
-  const result= await launchPumpFunToken(
-    agent,
-  tokenName,
-  tokenTicker,
-  description,
-  imageUrl!,
-)
-
-console.log(result)
-return result
-
-
-
-
-} catch(e){
-  throw new Error(e as string);
-}
-
-
+      console.log(result);
+      return result;
+    } catch (e) {
+      throw new Error(e as string);
+    }
   },
 
   {
     name: "mint_shit_coin",
-    description:
-      "create a new token using the launch_pumpfun_token tool",
+    description: "create a new token using the launch_pumpfun_token tool",
     schema: z.object({
-      tokenName: z
-        .string()
-        .describe("The name of the token to be created"),
+      tokenName: z.string().describe("The name of the token to be created"),
       tokenTicker: z
         .string()
         .describe("The ticker symbol of the token to be created"),
