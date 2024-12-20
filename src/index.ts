@@ -11,6 +11,8 @@ import { defiTeamRouter } from "./router/defi.js";
 import { pumpfunNode } from "./agent/defi/pumpfunAgent.js";
 import { lendingNode } from "./agent/defi/lendingAgent.js";
 import { bridgeNode } from "./agent/defi/bridgeAgent.js";
+import { readNode } from "./agent/read/readManager.js";
+import { readAnalyticsNode } from "./agent/read/readAgent.js";
 const workflow = new StateGraph(solanaAgentState)
   .addNode("defiManager", defiNode)
   .addNode("chief", cheifNode)
@@ -19,6 +21,8 @@ const workflow = new StateGraph(solanaAgentState)
   .addNode("pumpFun", pumpfunNode)
   .addNode("lending", lendingNode)
   .addNode("bridge", bridgeNode)
+  .addNode("readManager", readNode)
+  .addNode("readAnalytics", readAnalyticsNode)
   .addEdge(START, "chief")
   .addEdge("generalist", END)
   .addConditionalEdges("chief", chiefRouter)
@@ -26,12 +30,16 @@ const workflow = new StateGraph(solanaAgentState)
   .addEdge("bridge", END)
   .addEdge("transferSwap", END)
   .addEdge("pumpFun", END)
-  .addEdge("lending", END);
+  .addEdge("lending", END)
+  .addEdge("readManager", "readAnalytics")
+  .addEdge("readAnalytics", END);
 
 export const graph = workflow.compile();
 
 export const transferMessage = {
-  messages: [new HumanMessage("bridge 1 USDC from Base to Sepolia")],
+  messages: [
+    new HumanMessage("what are the tredning coins on solana right now?"),
+  ],
 };
 
 const result = await graph.invoke(transferMessage);

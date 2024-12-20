@@ -51,6 +51,10 @@ export const solanaAgentState = Annotation.Root({
     reducer: (x, y) => y ?? x ?? false,
     default: () => false,
   }),
+  isReadQuery: Annotation<boolean>({
+    reducer: (x, y) => y ?? x ?? false,
+    default: () => false,
+  }),
 
   defiOptions: Annotation<DefiOptions>({
     reducer: (x, y) => ({
