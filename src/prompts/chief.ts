@@ -11,6 +11,11 @@ export const parser = StructuredOutputParser.fromZodSchema(
       .boolean()
       .describe("Query is related to DeFi or financial protocols"),
     isGeneralQuestion: z.boolean().describe("Query is about basic concepts"),
+    isReadQuery: z
+      .boolean()
+      .describe(
+        "Query requires reading market data, token info, or statistics",
+      ),
   }),
 );
 
@@ -27,12 +32,13 @@ export const prompt = PromptTemplate.fromTemplate(
     - TECHNICAL: Handles technical implementation, coding, and infrastructure questions regarding Solana
     - DEFI: Manages DeFi, trading,lending, staking and financial protocol actions like swapping , trading, creating NFTs , creating shitcoins, memecoins on Pump.Fun, staking/lending on Jupiter, lending/staking on Lulo etc
     - GENERAL: Handles basic blockchain concepts and general information
+    - READ: Handles market data queries including top traders, top coins, market statistics, and token information
 
     Classification Guidelines:
     - Technical queries include: code, smart contracts, implementation details
     - DeFi queries include: trading, liquidity, yields, financial protocols
-    - Current affairs include: recent updates, news, network changes
     - General queries include: basic concepts, terminology, blockchain fundamentals
+    - Read queries include: market statistics, token prices, trading volumes, top performers, trending coins, token information, traders
 
     \n {messages} \n
     `,

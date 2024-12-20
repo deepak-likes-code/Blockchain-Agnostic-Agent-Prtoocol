@@ -14,9 +14,15 @@ export const cheifNode = async (state: typeof solanaAgentState.State) => {
     messages: messages,
   });
 
-  const { isTechnicalQuery, isDefiQuery, isGeneralQuestion } = result;
+  const { isTechnicalQuery, isDefiQuery, isGeneralQuestion, isReadQuery } =
+    result;
 
-  return { isGeneralQuestion, isDefiQuery, isTechnicalQuery };
+  return {
+    isGeneralQuestion,
+    isDefiQuery,
+    isTechnicalQuery,
+    isReadQuery,
+  };
 };
 
 // const example = "how do i add a transaction in a solana smart contract?";
