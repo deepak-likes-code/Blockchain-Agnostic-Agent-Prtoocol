@@ -32,6 +32,7 @@
     "@wormhole-foundation/sdk": "^1.2.0",
     "fuels": "^0.62.0",
     "solana-agent-kit": "^1.1.0"
+    
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",

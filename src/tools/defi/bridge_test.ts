@@ -24,6 +24,8 @@ import { PublicKey, Transaction } from "@solana/web3.js";
 const USDC_ADDRESS = {
   SOLANA: new PublicKey("4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"),
   BASE: "0x036CbD53842c5426634e7929541eC2318f3dCF7e", // BaseSepolia USDC
+  POLYGON: "0x9999f7Fea5938fD3b1E26A12c3f2fb024e194f97", // Mumbai (Polygon Testnet) USDC
+  SEPOLIA: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
 };
 
 // Helper to get environment variables
@@ -161,13 +163,16 @@ export const bridge_usdc_auto = tool(
       const solanaWallet = new PublicKey(source.signer.address());
 
       console.log("Checking USDC setup...");
-      await ensureTokenAccount(solanaWallet);
+      // await ensureTokenAccount(solanaWallet);
 
       console.log("Verifying USDC balance...");
-      await checkUSDCBalance(solanaWallet, amount);
+      // await checkUSDCBalance(solanaWallet, amount);
 
       // Convert amount for transfer
       const transferAmount = BigInt(amount * 1_000_000);
+
+      // Set native gas amount for automatic transfer
+      const nativeGas = BigInt(0); // or use amount.units(amount.parse('0.0', 6))
 
       console.log("Creating automatic circle transfer...");
       const transfer = await wh.circleTransfer(
@@ -175,6 +180,8 @@ export const bridge_usdc_auto = tool(
         source.address,
         destination.address,
         true, // automatic = true
+        undefined, // default options
+        nativeGas, // add native gas parameter
       );
 
       console.log("Initiating automatic transfer...");
@@ -368,6 +375,177 @@ export const complete_partial_transfer = tool(
           "Transaction hash from the source chain where the transfer was initiated",
         ),
       toAddress: z.string().describe("Destination address on Base Sepolia"),
+    }),
+  },
+);
+
+export const bridge_usdc_base_to_polygon = tool(
+  async ({ amount, toAddress }) => {
+    console.log(
+      `Starting automatic bridge transfer of ${amount} USDC from Base to Polygon (Mumbai) to ${toAddress}`,
+    );
+    try {
+      // Initialize Wormhole SDK with Testnet
+      const wh = await wormhole("Testnet", [evm]);
+
+      // Setup chains
+      const sendChain = wh.getChain("BaseSepolia");
+      const rcvChain = wh.getChain("Polygon");
+
+      console.log("Initializing automatic transfer between chains:", {
+        source: sendChain.chain,
+        destination: rcvChain.chain,
+      });
+
+      // Get signers
+      const source = await getSigner(sendChain);
+      const destination = await getSigner(rcvChain);
+
+      // Convert amount for transfer (USDC has 6 decimals)
+      const transferAmount = BigInt(amount * 1_000_000);
+
+      // Set native gas amount for automatic transfer
+      const nativeGas = BigInt(0);
+
+      console.log("Creating automatic circle transfer...");
+      const transfer = await wh.circleTransfer(
+        transferAmount,
+        source.address,
+        destination.address,
+        true, // automatic = true
+        undefined, // default options
+        nativeGas,
+      );
+
+      console.log("Initiating automatic transfer...");
+      const srcTxids = await transfer.initiateTransfer(source.signer);
+      console.log("Transfer initiated:", srcTxids);
+
+      console.log("Transfer configuration:", {
+        amount: amount,
+        transferAmount: transferAmount.toString(),
+        sourceChain: sendChain.chain,
+        destinationChain: rcvChain.chain,
+        sourceAddress: source.address.toString(),
+        destinationAddress: destination.address.toString(),
+      });
+
+      return {
+        status: "success",
+        message: "Automatic testnet bridge transfer initiated successfully",
+        sourceTransactionIds: srcTxids,
+        transferDetails: {
+          amount: amount,
+          fromChain: "BaseSepolia",
+          toChain: "Mumbai",
+          destinationAddress: toAddress,
+          testnetInfo: {
+            baseUSDC: USDC_ADDRESS.BASE,
+            polygonUSDC: USDC_ADDRESS.POLYGON,
+          },
+        },
+      };
+    } catch (e: any) {
+      console.error("Bridge transfer error:", {
+        error: e,
+        stack: e.stack,
+        amount,
+        toAddress,
+      });
+      throw new Error(`Automatic testnet bridge transfer failed: ${e.message}`);
+    }
+  },
+  {
+    name: "bridge_usdc_base_to_polygon",
+    description:
+      "Bridge USDC from Base Sepolia to Polygon Mumbai using Wormhole's automatic transfer",
+    schema: z.object({
+      amount: z.number().describe("Amount of USDC to bridge"),
+      toAddress: z.string().describe("Destination address on Polygon Mumbai"),
+    }),
+  },
+);
+
+export const bridge_usdc_base_to_sepolia = tool(
+  async ({ amount, toAddress }) => {
+    console.log(
+      `Starting manual bridge transfer of ${amount} USDC from Base to Sepolia to ${toAddress}`,
+    );
+    try {
+      // Initialize Wormhole SDK with Testnet
+      const wh = await wormhole("Testnet", [evm]);
+
+      // Setup chains
+      const sendChain = wh.getChain("BaseSepolia");
+      const rcvChain = wh.getChain("Sepolia");
+
+      console.log("Initializing manual transfer between chains:", {
+        source: sendChain.chain,
+        destination: rcvChain.chain,
+      });
+
+      // Get signers
+      const source = await getSigner(sendChain);
+      const destination = await getSigner(rcvChain);
+
+      // Convert amount for transfer (USDC has 6 decimals)
+      const transferAmount = BigInt(amount * 1_000_000);
+
+      console.log("Creating circle transfer...");
+      const transfer = await wh.circleTransfer(
+        transferAmount,
+        source.address,
+        destination.address,
+        false, // automatic = false for manual transfer
+      );
+
+      console.log("Initiating transfer...");
+      const srcTxids = await transfer.initiateTransfer(source.signer);
+      console.log("Transfer initiated:", srcTxids);
+
+      console.log("Fetching attestation...");
+      const timeout = 120 * 1000; // 2 minutes timeout
+      const attestIds = await transfer.fetchAttestation(timeout);
+      console.log("Attestation received:", attestIds);
+
+      console.log("Completing transfer on destination chain...");
+      const dstTxids = await transfer.completeTransfer(destination.signer);
+      console.log("Transfer completed:", dstTxids);
+
+      return {
+        status: "success",
+        message: "Manual testnet bridge transfer completed successfully",
+        sourceTransactionIds: srcTxids,
+        attestationIds: attestIds,
+        destinationTransactionIds: dstTxids,
+        transferDetails: {
+          amount: amount,
+          fromChain: "BaseSepolia",
+          toChain: "Sepolia",
+          destinationAddress: toAddress,
+          testnetInfo: {
+            baseUSDC: USDC_ADDRESS.BASE,
+            sepoliaUSDC: USDC_ADDRESS.SEPOLIA,
+          },
+        },
+      };
+    } catch (e: any) {
+      console.error("Bridge transfer error:", {
+        error: e,
+        stack: e.stack,
+        amount,
+        toAddress,
+      });
+      throw new Error(`Manual testnet bridge transfer failed: ${e.message}`);
+    }
+  },
+  {
+    name: "bridge_usdc_base_to_sepolia_manual",
+    description:
+      "Bridge USDC from Base Sepolia to Sepolia using Wormhole's manual transfer process",
+    schema: z.object({
+      amount: z.number().describe("Amount of USDC to bridge"),
+      toAddress: z.string().describe("Destination address on Sepolia"),
     }),
   },
 );
