@@ -17,6 +17,7 @@ export interface DefiOptions {
   isTokenLaunch: boolean;
   isNFTLaunch: boolean;
   isPumpFun: boolean;
+  isBridge: boolean;
 }
 
 // Define the state using Annotation.Root
@@ -63,6 +64,7 @@ export const solanaAgentState = Annotation.Root({
       isTokenLaunch: false,
       isNFTLaunch: false,
       isPumpFun: false,
+      isBridge: false,
     }),
   }),
 });

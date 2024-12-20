@@ -33,6 +33,7 @@ export const defiNode = async (state: typeof solanaAgentState.State) => {
       isTokenLaunch: result.isTokenLaunch,
       isNFTLaunch: result.isNFTLaunch,
       isPumpFun: result.isPumpFun,
+      isBridge: result.isBridge,
     },
   };
 };

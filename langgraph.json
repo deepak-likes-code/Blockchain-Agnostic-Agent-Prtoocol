@@ -1,8 +1,28 @@
 {
-  "node_version": "20",
+  "dockerfile_lines": [
+    "FROM langchain/langgraphjs-api:20",
+    "",
+    "# Install build dependencies",
+    "RUN apt-get update && apt-get install -y \\",
+    "    python3 \\",
+    "    make \\",
+    "    gcc \\",
+    "    g++ \\",
+    "    build-essential \\",
+    "    python3-pip",
+    "",
+    "# Add your application",
+    "ADD . /deps/solgent",
+    "",
+    "# Install dependencies",
+    "WORKDIR /deps/solgent",
+    "",
+    "# Clean install with build tools present",
+    "RUN npm ci"
+  ],
   "graphs": {
     "agent": "./src/index.ts:graph"
   },
   "env": ".env",
-  "dependencies": ["."]
+  "node_version": "20"
 }

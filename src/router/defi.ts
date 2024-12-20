@@ -11,6 +11,9 @@ export const defiTeamRouter = (state: typeof solanaAgentState.State) => {
   }
   if (state.defiOptions.isStaking) {
     return "lending";
+  }
+  if (state.defiOptions.isBridge) {
+    return "bridge";
   } else {
     return END;
   }

@@ -10,7 +10,7 @@ import { HumanMessage } from "@langchain/core/messages";
 import { defiTeamRouter } from "./router/defi.js";
 import { pumpfunNode } from "./agent/defi/pumpfunAgent.js";
 import { lendingNode } from "./agent/defi/lendingAgent.js";
-
+import { bridgeNode } from "./agent/defi/bridgeAgent.js";
 const workflow = new StateGraph(solanaAgentState)
   .addNode("defiManager", defiNode)
   .addNode("chief", cheifNode)
@@ -18,10 +18,12 @@ const workflow = new StateGraph(solanaAgentState)
   .addNode("transferSwap", transferSwapNode)
   .addNode("pumpFun", pumpfunNode)
   .addNode("lending", lendingNode)
+  .addNode("bridge", bridgeNode)
   .addEdge(START, "chief")
   .addEdge("generalist", END)
   .addConditionalEdges("chief", chiefRouter)
   .addConditionalEdges("defiManager", defiTeamRouter)
+  .addEdge("bridge", END)
   .addEdge("transferSwap", END)
   .addEdge("pumpFun", END)
   .addEdge("lending", END);
@@ -29,7 +31,7 @@ const workflow = new StateGraph(solanaAgentState)
 export const graph = workflow.compile();
 
 export const transferMessage = {
-  // messages: [new HumanMessage("launch a meme coi based on cats on pump.fun")],
+  messages: [new HumanMessage("bridge 1 USDC from Base to Sepolia")],
 };
 
 const result = await graph.invoke(transferMessage);
