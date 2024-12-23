@@ -4,9 +4,6 @@ import { PromptTemplate } from "@langchain/core/prompts";
 
 export const parser = StructuredOutputParser.fromZodSchema(
   z.object({
-    isTechnicalQuery: z
-      .boolean()
-      .describe("Query requires technical expertise"),
     isDefiQuery: z
       .boolean()
       .describe("Query is related to DeFi or financial protocols"),
@@ -29,15 +26,14 @@ export const prompt = PromptTemplate.fromTemplate(
  {formatInstructions}
 
     Teams and their specialties:
-    - TECHNICAL: Handles technical implementation, coding, and infrastructure questions regarding Solana
-    - DEFI: Manages DeFi, trading,lending, staking and financial protocol actions like swapping , trading, creating NFTs , creating shitcoins, memecoins on Pump.Fun, staking/lending on Jupiter, lending/staking on Lulo etc
-    - GENERAL: Handles basic blockchain concepts and general information
+    - DEFI: Manages DeFi, trading, lending, staking and financial protocol actions like swapping, trading, creating NFTs, creating shitcoins, memecoins on Pump.Fun, base name registrations, creating coins on Zora, staking/lending on Jupiter, lending/staking on Lulo etc
+    - GENERAL: Handles general information queries and internet searches not specific to blockchain
     - READ: Handles market data queries including top traders, top coins, market statistics, and token information
 
     Classification Guidelines:
     - Technical queries include: code, smart contracts, implementation details
     - DeFi queries include: trading, liquidity, yields, financial protocols
-    - General queries include: basic concepts, terminology, blockchain fundamentals
+    - General queries include: non-blockchain topics, internet searches, general knowledge
     - Read queries include: market statistics, token prices, trading volumes, top performers, trending coins, token information, traders
 
     \n {messages} \n
