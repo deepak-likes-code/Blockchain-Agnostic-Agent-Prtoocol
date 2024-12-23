@@ -38,7 +38,7 @@ export const graph = workflow.compile();
 
 export const transferMessage = {
   messages: [
-    new HumanMessage("what are the tredning coins on solana right now?"),
+    new HumanMessage("swap 0.6 usdt to usdc"),
   ],
 };
 
