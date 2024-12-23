@@ -9,14 +9,3 @@ export const agent = new SolanaAgentKit(
 );
 
 
-const config = {
-     cdpWalletData:undefined,
-    
-    
-    networkId: process.env.NETWORK_ID || "base-sepolia",
-  };
-
-
-
-
- export const baseAgent = await CdpAgentkit.configureWithWallet(config);

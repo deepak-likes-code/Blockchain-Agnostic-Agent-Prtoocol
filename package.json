@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@certusone/wormhole-sdk": "^0.10.18",
+    "@coinbase/cdp-agentkit-core": "^0.0.8",
+    "@coinbase/cdp-langchain": "^0.0.9",
     "@langchain/anthropic": "^0.3.9",
     "@langchain/community": "^0.3.19",
     "@langchain/core": "^0.3.2",
@@ -32,7 +34,6 @@
     "@wormhole-foundation/sdk": "^1.2.0",
     "fuels": "^0.62.0",
     "solana-agent-kit": "^1.1.0"
-    
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
