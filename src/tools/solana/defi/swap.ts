@@ -1,5 +1,5 @@
 import { tool } from "@langchain/core/tools";
-import { agent } from "../../utils/agent.js";
+import { agent } from "../../../utils/agent.js";
 import { JUP_API } from "solana-agent-kit/dist/constants/index.js";
 import { VersionedTransaction } from "@solana/web3.js";
 import { z } from "zod";

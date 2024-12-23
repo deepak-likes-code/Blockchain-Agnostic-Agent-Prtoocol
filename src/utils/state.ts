@@ -30,6 +30,18 @@ export interface BaseOptions {
   isZoraOperation: boolean;
 }
 
+// Add SolanaOperationType enum
+export enum SolanaOperationType {
+  READ = "read",
+  DEFI = "defi",
+}
+
+// Add SolanaOptions interface for top-level classification
+export interface SolanaOptions {
+  isReadOperation: boolean;
+  isDefiAction: boolean;
+}
+
 // Define the state using Annotation.Root
 export const solanaAgentState = Annotation.Root({
   messages: Annotation<BaseMessage[]>({
@@ -47,7 +59,7 @@ export const solanaAgentState = Annotation.Root({
     default: () => Blockchain.SOLANA,
   }),
 
-  isDefiQuery: Annotation<boolean>({
+  isBlockchainQuery: Annotation<boolean>({
     reducer: (x, y) => y ?? x ?? false,
     default: () => false,
   }),
@@ -64,6 +76,18 @@ export const solanaAgentState = Annotation.Root({
   isReadQuery: Annotation<boolean>({
     reducer: (x, y) => y ?? x ?? false,
     default: () => false,
+  }),
+
+  // Add solanaOptions before defiOptions
+  solanaOptions: Annotation<SolanaOptions>({
+    reducer: (x, y) => ({
+      ...x,
+      ...y,
+    }),
+    default: () => ({
+      isReadOperation: false,
+      isDefiAction: false,
+    }),
   }),
 
   defiOptions: Annotation<DefiOptions>({

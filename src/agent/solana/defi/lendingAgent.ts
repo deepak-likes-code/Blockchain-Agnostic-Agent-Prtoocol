@@ -1,10 +1,10 @@
 import "dotenv/config";
 import { RunnableSequence } from "@langchain/core/runnables";
-import { tokenList } from "../../helpers/tokens.js";
-import { gptModel } from "../../utils/model.js";
-import { solanaAgentState } from "../../utils/state.js";
-import { lendingPrompt } from "../../prompts/defi/lending.js";
-import { lendingTools } from "../../tools/defi/lendTokens.js";
+import { tokenList } from "../../../helpers/tokens.js";
+import { gptModel } from "../../../utils/model.js";
+import { solanaAgentState } from "../../../utils/state.js";
+import { lendingPrompt } from "../../../prompts/solana/defi/lending.js";
+import { lendingTools } from "../../../tools/solana/defi/lendTokens.js";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 
 const lendingGraph = createReactAgent({

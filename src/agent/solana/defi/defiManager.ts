@@ -1,9 +1,13 @@
 import "dotenv/config";
 import { RunnableSequence } from "@langchain/core/runnables";
-import { tokenList } from "../../helpers/tokens.js";
-import { gptMiniModel, gptModel } from "../../utils/model.js";
-import { solanaAgentState } from "../../utils/state.js";
-import { defiPrompt, defiParser } from "../../prompts/defi/defiManager.js";
+import { tokenList } from "../../../helpers/tokens.js";
+import { gptModel } from "../../../utils/model.js";
+import { solanaAgentState } from "../../../utils/state.js";
+
+import {
+  defiPrompt,
+  defiParser,
+} from "../../../prompts/solana/defi/defiManager.js";
 
 const chain = RunnableSequence.from([
   {

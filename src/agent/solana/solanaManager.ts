@@ -2,19 +2,24 @@ import "dotenv/config";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { gptModel } from "../../utils/model.js";
 import { solanaAgentState } from "../../utils/state.js";
-import { readPrompt, readParser } from "../../prompts/read/readManager.js";
+import {
+  solanaPrompt,
+  solanaParser,
+} from "../../prompts/solana/solanaManager.js";
 
 const chain = RunnableSequence.from([
   {
     messages: (input) => input.messages,
-    formatInstructions: () => readParser.getFormatInstructions(),
+    formatInstructions: () => solanaParser.getFormatInstructions(),
   },
-  readPrompt,
+  solanaPrompt,
   gptModel,
-  readParser,
+  solanaParser,
 ]);
 
-export const readNode = async (state: typeof solanaAgentState.State) => {
+export const solanaManagerNode = async (
+  state: typeof solanaAgentState.State,
+) => {
   const { messages } = state;
 
   const result = await chain.invoke({
@@ -23,11 +28,9 @@ export const readNode = async (state: typeof solanaAgentState.State) => {
 
   // Update the state with the classification result
   return {
-    readOptions: {
-      isTopTraders: result.isTopTraders,
-      isTopCoins: result.isTopCoins,
-      isMarketStats: result.isMarketStats,
-      isTokenInfo: result.isTokenInfo,
+    solanaOptions: {
+      isReadOperation: result.isReadOperation,
+      isDefiAction: result.isDefiAction,
     },
   };
 };

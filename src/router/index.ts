@@ -3,15 +3,12 @@ import { solanaAgentState } from "../utils/state.js";
 import { Blockchain } from "../utils/state.js";
 
 export const chiefRouter = async (state: typeof solanaAgentState.State) => {
-  const { isDefiQuery, isGeneralQuestion, isTechnicalQuery, isReadQuery } =
-    state;
+  const { isBlockchainQuery, isGeneralQuestion } = state;
 
-  if (isDefiQuery) {
+  if (isBlockchainQuery) {
     return "blockchainChief";
   } else if (isGeneralQuestion) {
     return "generalist";
-  } else if (isReadQuery) {
-    return "readManager";
   } else {
     return END;
   }
@@ -23,7 +20,7 @@ export const blockchainChiefRouter = async (
   const { blockchain } = state;
 
   if (blockchain === Blockchain.SOLANA) {
-    return "defiManager";
+    return "solanaManager";
   }
   if (blockchain === Blockchain.BASE) {
     return "base";
