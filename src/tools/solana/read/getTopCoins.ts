@@ -1,6 +1,6 @@
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
-import { agent } from "../../utils/agent.js";
+import { agent } from "../../../utils/agent.js";
 
 // Add new interface for API response
 interface BirdeyeToken {

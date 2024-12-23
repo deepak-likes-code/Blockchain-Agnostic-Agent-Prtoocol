@@ -14,13 +14,11 @@ export const cheifNode = async (state: typeof solanaAgentState.State) => {
     messages: messages,
   });
 
-  const {  isDefiQuery, isGeneralQuestion, isReadQuery } =
-    result;
+  const { isBlockchainQuery, isGeneralQuestion } = result;
 
   return {
+    isBlockchainQuery,
     isGeneralQuestion,
-    isDefiQuery,
-    isReadQuery,
   };
 };
 

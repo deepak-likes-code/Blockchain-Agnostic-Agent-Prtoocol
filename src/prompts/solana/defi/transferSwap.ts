@@ -2,7 +2,7 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { tokenList } from "../../helpers/tokens.js";
+import { tokenList } from "../../../helpers/tokens.js";
 
 // Convert token list to a more readable format for the prompt
 const formattedTokenList = tokenList

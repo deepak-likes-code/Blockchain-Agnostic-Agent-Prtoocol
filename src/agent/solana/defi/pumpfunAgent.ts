@@ -1,7 +1,7 @@
 import "dotenv/config";
-import { gptModel } from "../../utils/model.js";
-import { solanaAgentState } from "../../utils/state.js";
-import { pumpfunPrompt } from "../../prompts/defi/pumpfun.js";
+import { gptModel } from "../../../utils/model.js";
+import { solanaAgentState } from "../../../utils/state.js";
+import { pumpfunPrompt } from "../../../prompts/solana/defi/pumpfun.js";
 import { pumpfunTools } from "./defiToolNode.js";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 

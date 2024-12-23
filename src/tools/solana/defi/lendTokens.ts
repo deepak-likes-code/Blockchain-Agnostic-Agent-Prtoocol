@@ -1,5 +1,5 @@
 import { tool } from "@langchain/core/tools";
-import { agent } from "../../utils/agent.js";
+import { agent } from "../../../utils/agent.js";
 import { z } from "zod";
 import { lendAsset as luloLendAsset } from "solana-agent-kit/dist/tools/lend.js";
 import { PublicKey } from "@solana/web3.js";

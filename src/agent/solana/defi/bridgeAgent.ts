@@ -1,16 +1,15 @@
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { gptModel } from "../../utils/model.js";
-import { solanaAgentState } from "../../utils/state.js";
+import { gptModel } from "../../../utils/model.js";
+import { solanaAgentState } from "../../../utils/state.js";
+
 import {
   bridge_usdc_auto,
+  bridge_usdc_manual,
   bridge_usdc_base_to_polygon,
   bridge_usdc_base_to_sepolia,
-  bridge_usdc_manual,
-  complete_partial_transfer,
-} from "../../tools/defi/bridge_test.js";
+} from "../../../tools/solana/defi/bridge_test.js";
 import { MessagesPlaceholder } from "@langchain/core/prompts";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { HumanMessage } from "@langchain/core/messages";
 
 const bridgePrompt = ChatPromptTemplate.fromMessages([
   [

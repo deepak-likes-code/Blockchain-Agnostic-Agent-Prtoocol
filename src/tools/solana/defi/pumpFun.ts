@@ -1,8 +1,8 @@
 import { tool } from "@langchain/core/tools";
-import { agent } from "../../utils/agent.js";
+import { agent } from "../../../utils/agent.js";
 import { z } from "zod";
 import { launchPumpFunToken } from "solana-agent-kit/dist/tools/launch_pumpfun_token.js";
-import { dalleModel } from "../../utils/model.js";
+import { dalleModel } from "../../../utils/model.js";
 
 export const mint_shit_coin = tool(
   async ({ tokenName, tokenTicker, description, imagePrompt }) => {

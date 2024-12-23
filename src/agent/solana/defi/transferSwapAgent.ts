@@ -1,8 +1,8 @@
 import "dotenv/config";
-import { tokenList } from "../../helpers/tokens.js";
-import { gptModel } from "../../utils/model.js";
-import { solanaAgentState } from "../../utils/state.js";
-import { transferSwapPrompt } from "../../prompts/defi/transferSwap.js";
+import { tokenList } from "../../../helpers/tokens.js";
+import { gptModel } from "../../../utils/model.js";
+import { solanaAgentState } from "../../../utils/state.js";
+import { transferSwapPrompt } from "../../../prompts/solana/defi/transferSwap.js";
 import { transferSwapTools } from "./defiToolNode.js";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 

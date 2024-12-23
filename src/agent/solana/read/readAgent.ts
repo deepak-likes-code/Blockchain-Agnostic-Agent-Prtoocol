@@ -1,8 +1,8 @@
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { gptModel } from "../../utils/model.js";
-import { solanaAgentState } from "../../utils/state.js";
-import { get_top_traders } from "../../tools/analytics/getTraders.js";
-import { get_trending_coins } from "../../tools/analytics/getTopCoins.js";
+import { gptModel } from "../../../utils/model.js";
+import { solanaAgentState } from "../../../utils/state.js";
+import { get_top_traders } from "../../../tools/solana/read/getTraders.js";
+import { get_trending_coins } from "../../../tools/solana/read/getTopCoins.js";
 import { MessagesPlaceholder } from "@langchain/core/prompts";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 

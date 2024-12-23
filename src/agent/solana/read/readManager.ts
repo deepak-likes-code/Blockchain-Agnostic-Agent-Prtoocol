@@ -1,8 +1,11 @@
 import "dotenv/config";
 import { RunnableSequence } from "@langchain/core/runnables";
-import { gptModel } from "../../utils/model.js";
-import { solanaAgentState } from "../../utils/state.js";
-import { readPrompt, readParser } from "../../prompts/read/readManager.js";
+import { gptModel } from "../../../utils/model.js";
+import { solanaAgentState } from "../../../utils/state.js";
+import {
+  readPrompt,
+  readParser,
+} from "../../../prompts/solana/read/readManager.js";
 
 const chain = RunnableSequence.from([
   {

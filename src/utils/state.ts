@@ -47,7 +47,7 @@ export const solanaAgentState = Annotation.Root({
     default: () => Blockchain.SOLANA,
   }),
 
-  isDefiQuery: Annotation<boolean>({
+  isBlockchainQuery: Annotation<boolean>({
     reducer: (x, y) => y ?? x ?? false,
     default: () => false,
   }),
