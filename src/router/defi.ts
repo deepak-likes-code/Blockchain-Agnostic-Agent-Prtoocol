@@ -6,6 +6,9 @@ export const solanaDefiTeamRouter = (state: typeof solanaAgentState.State) => {
   if (state.defiOptions.isSwap) {
     return "transferSwap";
   }
+  if (state.defiOptions.isTransfer) {
+    return "transferSwap";
+  }
   if (state.defiOptions.isPumpFun) {
     return "pumpFun";
   }
