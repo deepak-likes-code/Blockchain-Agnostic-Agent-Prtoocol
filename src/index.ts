@@ -17,6 +17,7 @@ import { lendingNode } from "./agent/solana/defi/lendingAgent.js";
 import { bridgeNode } from "./agent/solana/defi/bridgeAgent.js";
 import { readNode } from "./agent/solana/read/readManager.js";
 import { readAnalyticsNode } from "./agent/solana/read/readAgent.js";
+import { baseBridgeNode } from "./agent/base/bridgeAgent.js";
 import { baseNode } from "./agent/base/baseManager.js";
 import { basenameNode } from "./agent/base/basenameAgent.js";
 import { nftNode as baseNftNode } from "./agent/base/nftAgent.js";
@@ -41,6 +42,7 @@ const workflow = new StateGraph(solanaAgentState)
   .addNode("baseNft", baseNftNode)
   .addNode("baseTradeTransfer", baseTradeTransferNode)
   .addNode("baseZora", baseZoraNode)
+  .addNode("baseBridge", baseBridgeNode)
   .addNode("blockchainChief", blockchainChiefNode)
   .addNode("baseWalletBalance", baseWalletBalanceNode)
   .addNode("solanaManager", solanaManagerNode)
@@ -61,7 +63,8 @@ const workflow = new StateGraph(solanaAgentState)
   .addEdge("baseNft", END)
   .addEdge("baseTradeTransfer", END)
   .addEdge("baseZora", END)
-  .addEdge("baseWalletBalance", END);
+  .addEdge("baseWalletBalance", END)
+  .addEdge("baseBridge", END);
 
 export const graph = workflow.compile();
 
@@ -71,6 +74,14 @@ export const transferMessage = {
   ],
 };
 
-const result = await graph.invoke(transferMessage);
+const bridgeMessage = {
+  messages: [
+    new HumanMessage(
+      "Can you bridge 1 USDC from base to the wallet 0xc68698C7baEa3fcf1fA615CC9bDE67cb812F8362 on Sepolia",
+    ),
+  ],
+};
+
+const result = await graph.invoke(bridgeMessage);
 
 console.log(result);
