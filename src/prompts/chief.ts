@@ -25,6 +25,8 @@ export const prompt = PromptTemplate.fromTemplate(
     Classification Guidelines:
     - Blockchain queries include: 
       * Any activity on Base, Solana, or Fuel networks
+      * Bridging from one chain to another
+      * making memecoins
       * DeFi, trading, NFTs, cryptocurrencies, smart contracts
       * Token information, market data
       * Network-specific actions (Base name registrations, Solana programs, Fuel scripts)

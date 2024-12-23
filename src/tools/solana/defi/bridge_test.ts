@@ -1,6 +1,6 @@
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
-import { agent } from "../../../utils/agent.js";
+import { agent, testAgent } from "../../../utils/agent.js";
 import { Wormhole, wormhole } from "@wormhole-foundation/sdk";
 import evm from "@wormhole-foundation/sdk/evm";
 import solana from "@wormhole-foundation/sdk/solana";
@@ -79,7 +79,7 @@ async function ensureTokenAccount(walletAddress: PublicKey): Promise<void> {
     );
 
     try {
-      await getAccount(agent.connection, associatedTokenAddress);
+      await getAccount(testAgent.connection, associatedTokenAddress);
       console.log("USDC token account exists");
     } catch (error) {
       console.log("Creating USDC token account...");
@@ -92,10 +92,11 @@ async function ensureTokenAccount(walletAddress: PublicKey): Promise<void> {
         ),
       );
 
-      const signature = await agent.connection.sendTransaction(transaction, [
-        agent.wallet,
-      ]);
-      await agent.connection.confirmTransaction(signature);
+      const signature = await testAgent.connection.sendTransaction(
+        transaction,
+        [testAgent.wallet],
+      );
+      await testAgent.connection.confirmTransaction(signature);
       console.log("USDC token account created:", signature);
     }
   } catch (error: any) {

@@ -7,6 +7,9 @@ export const baseParser = StructuredOutputParser.fromZodSchema(
     isBasename: z
       .boolean()
       .describe("Query is related to Base Name Service operations"),
+    isBridge: z
+      .boolean()
+      .describe("Query involves bridging assets to or from Base"),
     isNFTOperation: z
       .boolean()
       .describe("Query involves NFT operations on Base"),
@@ -34,6 +37,7 @@ export const basePrompt = PromptTemplate.fromTemplate(
 
     Base Operations Categories (Choose ONLY ONE):
     - BASENAME: Base Name Service related operations
+    - BRIDGE: Bridging assets to/from Base
     - NFT_OPERATION: NFT-related activities on Base
     - TRADE_TRANSFER: Trading or transfer operations
     - WALLET_BALANCE: Wallet and account operations
@@ -46,6 +50,13 @@ export const basePrompt = PromptTemplate.fromTemplate(
       * Domain resolution
       * ENS-like operations on Base
       * Name service configurations
+
+    - Bridge queries include:
+      * Moving assets between Base and Ethereum
+      * Bridge protocol interactions
+      * Cross-chain transfers
+      * Bridge fee calculations
+      * Bridge security and confirmations
 
     - NFT Operation queries include:
       * Minting NFTs on Base
@@ -81,8 +92,9 @@ export const basePrompt = PromptTemplate.fromTemplate(
     Priority order for ambiguous cases:
     1. Zora Operations (if platform-specific)
     2. Base Name Service (if domain-related)
-    3. NFT/Trade/Wallet (based on main action)
+    3. Bridge (if cross-chain movement)
+    4. NFT/Trade/Wallet (based on main action)
 
     \n {messages} \n
-    `
+    `,
 );

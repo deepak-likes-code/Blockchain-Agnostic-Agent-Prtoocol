@@ -28,6 +28,7 @@ export interface BaseOptions {
   isTradeTransfer: boolean;
   isWalletBalance: boolean;
   isZoraOperation: boolean;
+  isBridge: boolean;
 }
 
 // Add SolanaOperationType enum
@@ -118,6 +119,7 @@ export const solanaAgentState = Annotation.Root({
       isTradeTransfer: false,
       isWalletBalance: false,
       isZoraOperation: false,
+      isBridge: false,
     }),
   }),
 });

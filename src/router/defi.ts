@@ -48,6 +48,9 @@ export const baseRouter = (state: typeof solanaAgentState.State) => {
   }
   if (state.baseOptions.isWalletBalance) {
     return "baseWalletBalance";
+  }
+  if (state.baseOptions.isBridge) {
+    return "baseBridge";
   } else {
     return END;
   }

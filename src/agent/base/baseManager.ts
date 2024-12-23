@@ -29,6 +29,7 @@ export const baseNode = async (state: typeof solanaAgentState.State) => {
       isTradeTransfer: result.isTradeTransfer,
       isWalletBalance: result.isWalletBalance,
       isZoraOperation: result.isZoraOperation,
+      isBridge: result.isBridge,
     },
   };
 };
