@@ -2,7 +2,7 @@ import { AIMessage } from "@langchain/core/messages";
 import { END } from "@langchain/langgraph";
 import { solanaAgentState } from "../utils/state.js";
 
-export const defiTeamRouter = (state: typeof solanaAgentState.State) => {
+export const solanaDefiTeamRouter = (state: typeof solanaAgentState.State) => {
   if (state.defiOptions.isSwap) {
     return "transferSwap";
   }
@@ -14,6 +14,17 @@ export const defiTeamRouter = (state: typeof solanaAgentState.State) => {
   }
   if (state.defiOptions.isBridge) {
     return "bridge";
+  } else {
+    return END;
+  }
+};
+
+export const solanaManagerRouter = (state: typeof solanaAgentState.State) => {
+  if (state.solanaOptions.isReadOperation) {
+    return "readManager";
+  }
+  if (state.solanaOptions.isDefiAction) {
+    return "defiManager";
   } else {
     return END;
   }

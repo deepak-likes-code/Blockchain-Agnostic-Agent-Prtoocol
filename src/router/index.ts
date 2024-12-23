@@ -20,7 +20,7 @@ export const blockchainChiefRouter = async (
   const { blockchain } = state;
 
   if (blockchain === Blockchain.SOLANA) {
-    return "defiManager";
+    return "solanaManager";
   }
   if (blockchain === Blockchain.BASE) {
     return "base";

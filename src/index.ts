@@ -7,7 +7,11 @@ import { blockchainChiefRouter, chiefRouter } from "./router/index.js";
 import { cheifNode } from "./agent/cheif.js";
 import { generalistNode } from "./agent/generalist.js";
 import { HumanMessage } from "@langchain/core/messages";
-import { baseRouter, defiTeamRouter } from "./router/defi.js";
+import {
+  baseRouter,
+  solanaDefiTeamRouter,
+  solanaManagerRouter,
+} from "./router/defi.js";
 import { pumpfunNode } from "./agent/solana/defi/pumpfunAgent.js";
 import { lendingNode } from "./agent/solana/defi/lendingAgent.js";
 import { bridgeNode } from "./agent/solana/defi/bridgeAgent.js";
@@ -20,6 +24,7 @@ import { tradeTransferNode as baseTradeTransferNode } from "./agent/base/tradeTr
 import { zoraNode as baseZoraNode } from "./agent/base/zoraAgent.js";
 import { blockchainChiefNode } from "./agent/blockchainChief.js";
 import { walletBalanceNode as baseWalletBalanceNode } from "./agent/base/getWalletBalance.js";
+import { solanaManagerNode } from "./agent/solana/solanaManager.js";
 
 const workflow = new StateGraph(solanaAgentState)
   .addNode("chief", cheifNode)
@@ -38,12 +43,14 @@ const workflow = new StateGraph(solanaAgentState)
   .addNode("baseZora", baseZoraNode)
   .addNode("blockchainChief", blockchainChiefNode)
   .addNode("baseWalletBalance", baseWalletBalanceNode)
+  .addNode("solanaManager", solanaManagerNode)
   .addEdge(START, "chief")
   .addEdge("generalist", END)
   .addConditionalEdges("chief", chiefRouter)
   .addConditionalEdges("blockchainChief", blockchainChiefRouter)
-  .addConditionalEdges("defiManager", defiTeamRouter)
   .addConditionalEdges("base", baseRouter)
+  .addConditionalEdges("solanaManager", solanaManagerRouter)
+  .addConditionalEdges("defiManager", solanaDefiTeamRouter)
   .addEdge("bridge", END)
   .addEdge("transferSwap", END)
   .addEdge("pumpFun", END)
@@ -59,7 +66,9 @@ const workflow = new StateGraph(solanaAgentState)
 export const graph = workflow.compile();
 
 export const transferMessage = {
-  messages: [new HumanMessage("what is the balance of my base wallet")],
+  messages: [
+    new HumanMessage("register a deepakisbasedaf domain on base testnet"),
+  ],
 };
 
 const result = await graph.invoke(transferMessage);
