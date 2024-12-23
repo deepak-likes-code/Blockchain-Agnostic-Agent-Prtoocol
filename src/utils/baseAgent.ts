@@ -33,7 +33,6 @@ const WALLET_DATA_FILE = "wallet_data.txt";
     const agentkit = await CdpAgentkit.configureWithWallet(config);
 
     const exportWallet = await agentkit.exportWallet()
-    console.log(exportWallet)
     fs.writeFileSync(WALLET_DATA_FILE, exportWallet);
 
 

@@ -18,3 +18,23 @@ export const defiTeamRouter = (state: typeof solanaAgentState.State) => {
     return END;
   }
 };
+
+
+export const baseRouter = (state: typeof solanaAgentState.State) => {
+ if(state.baseOptions.isBasename) {
+  return "basename";
+ }
+ if(state.baseOptions.isNFTOperation) {
+  return "baseNft";
+ }
+ if(state.baseOptions.isTradeTransfer) {
+  return "baseTradeTransfer";
+ }
+  if (state.baseOptions.isZoraOperation) {
+    return "baseZora";
+  }
+  
+  else {
+    return END;
+  }
+};

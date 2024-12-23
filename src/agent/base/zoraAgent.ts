@@ -2,6 +2,7 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { gptModel } from "../../utils/model.js";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { tools as baseTools } from "../../utils/baseAgent.js";
+import { solanaAgentState } from "../../utils/state.js";
 
 const zoraPrompt = ChatPromptTemplate.fromMessages([
     [
@@ -45,10 +46,19 @@ export async function handleZoraOperations(userMessage: string) {
 } 
 
 
-const result = await zoraAgent.invoke({
-    messages: [{
-        role: "user",
-        content: "create a token with bonding curve with the token name as 'test' and the token symbol as 'TEST' and create your own metadata for the token "
-    }]
-})
-console.log(result)
+export const zoraNode = async (state: typeof solanaAgentState.State) => {
+    const { messages } = state;
+
+    const result = await zoraAgent.invoke({ messages });
+
+    return { messages: [...result.messages] };
+}
+
+
+// const result = await zoraAgent.invoke({
+//     messages: [{
+//         role: "user",
+//         content: "create a token with bonding curve with the token name as 'test' and the token symbol as 'TEST' and create your own metadata for the token "
+//     }]
+// })
+// console.log(result)

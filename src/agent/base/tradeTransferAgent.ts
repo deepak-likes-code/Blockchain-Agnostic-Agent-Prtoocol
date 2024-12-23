@@ -3,6 +3,7 @@ import { CdpToolkit } from "@coinbase/cdp-langchain";
 import { gptModel } from "../../utils/model.js";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { tools as baseTools } from "../../utils/baseAgent.js";
+import { solanaAgentState } from "../../utils/state.js";
 
 const tradeTransferPrompt = ChatPromptTemplate.fromMessages([
     [
@@ -37,6 +38,15 @@ const tradeTransferAgent = createReactAgent({
     ),
     stateModifier: tradeTransferPrompt,
 });
+
+export const tradeTransferNode = async (state: typeof solanaAgentState.State) => {
+    const { messages } = state;
+
+    const result = await tradeTransferAgent.invoke({ messages });
+
+    return { messages: [...result.messages] };
+}
+
 
 export async function handleTradeTransfer(userMessage: string) {
     try {

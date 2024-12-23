@@ -7,6 +7,7 @@ export enum Blockchain {
   SOLANA = "solana",
   BASE = "base",
   APTOS = "aptos",
+  FUEL = "fuel",
 }
 
 // Separate DeFi options interface for better organization
@@ -18,6 +19,15 @@ export interface DefiOptions {
   isNFTLaunch: boolean;
   isPumpFun: boolean;
   isBridge: boolean;
+}
+
+// Add BaseOptions interface after DefiOptions
+export interface BaseOptions {
+  isBasename: boolean;
+  isNFTOperation: boolean;
+  isTradeTransfer: boolean;
+  isWalletBalance: boolean;
+  isZoraOperation: boolean;
 }
 
 // Define the state using Annotation.Root
@@ -69,6 +79,21 @@ export const solanaAgentState = Annotation.Root({
       isNFTLaunch: false,
       isPumpFun: false,
       isBridge: false,
+    }),
+  }),
+
+  // Add baseOptions after defiOptions
+  baseOptions: Annotation<BaseOptions>({
+    reducer: (x, y) => ({
+      ...x,
+      ...y,
+    }),
+    default: () => ({
+      isBasename: false,
+      isNFTOperation: false,
+      isTradeTransfer: false,
+      isWalletBalance: false,
+      isZoraOperation: false,
     }),
   }),
 });

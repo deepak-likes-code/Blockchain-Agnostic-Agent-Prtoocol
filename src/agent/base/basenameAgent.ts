@@ -2,6 +2,7 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { gptModel } from "../../utils/model.js";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { tools as baseTools } from "../../utils/baseAgent.js";
+import { solanaAgentState } from "../../utils/state.js";
 
 const basenamePrompt = ChatPromptTemplate.fromMessages([
     [
@@ -28,20 +29,15 @@ const basenameAgent = createReactAgent({
     stateModifier: basenamePrompt,
 });
 
-export async function handleBasenameRegistration(userMessage: string) {
-    try {
-        const result = await basenameAgent.invoke({
-            messages: [{
-                role: "user",
-                content: userMessage
-            }]
-        });
-        return result;
-    } catch (error) {
-        console.error('Error in basename registration:', error);
-        throw error;
-    }
-} 
+
+
+export const basenameNode = async (state: typeof solanaAgentState.State) => {
+    const { messages } = state;
+
+    const result = await basenameAgent.invoke({ messages });
+
+    return { messages: [...result.messages] };
+}
 
 // const result = await handleBasenameRegistration("register the name 'testing1234' for this wallet on base-sepolia")
 // console.log(result)

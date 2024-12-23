@@ -2,6 +2,7 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { gptModel } from "../../utils/model.js";
 import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { tools as baseTools } from "../../utils/baseAgent.js";
+import { solanaAgentState } from "../../utils/state.js";
 
 const nftPrompt = ChatPromptTemplate.fromMessages([
     [
@@ -30,6 +31,15 @@ const nftAgent = createReactAgent({
     ),
     stateModifier: nftPrompt,
 });
+
+
+export const nftNode = async (state: typeof solanaAgentState.State) => {
+    const { messages } = state;
+
+    const result = await nftAgent.invoke({ messages });
+
+    return { messages: [...result.messages] };
+}
 
 export async function handleNFTOperations(userMessage: string) {
     try {
